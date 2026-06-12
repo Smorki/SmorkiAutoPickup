@@ -2,11 +2,7 @@ An enterprise-grade, ultra-performance economy and utility plugin engineered spe
 player.getScheduler().run(plugin, task -> {
     player.getInventory().addItem(smeltedItem);
 }, null);
-💻 Commands & PermissionsCommandDescriptionPermission/autopickup toggleToggles the auto-smelt/pickup engine on or off.None (Default)/smorkiautopickup reloadAsynchronously reloads config.yml data.smorkiautopickup.admin⚙️ Configuration (config.yml)YAML#  ___ __  __  ___  ___  _  _____   _   _  _ _____ ___  ___ ___ ___ _  _ _   _ ___  
-# / __|  \/  |/ _ \| _ \| |/ /_ _| /_\ | | |_   _/ _ \| _ \_ _/ __| |/ / | | | _ \ 
-# \__ \ |\/| | (_) |   /| ' < | | / _ \| |_  | || (_) |  _/| | (__| ' <| |_| |  _/ 
-# |___/_|  |_|\___/|_|_\|_|\_\___/_/   \_\___|___\___/|_| |___\___|_|\_\\___/|_|   
-#
+💻 Commands & PermissionsCommandDescriptionPermission/autopickup toggleToggles the auto-smelt/pickup engine on or off.None (Default)/smorkiautopickup reloadAsynchronously reloads config.yml data.smorkiautopickup.admin⚙️ Configuration (config.yml)YAML#
 # Engineered by Smorki | Target Architecture: Folia 1.21.11
 
 settings:
