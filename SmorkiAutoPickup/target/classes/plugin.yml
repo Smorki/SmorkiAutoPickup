@@ -1,0 +1,30 @@
+# ============================================================
+#  SmorkiAutoPickup — plugin.yml
+#  Platform: Folia / Paper 1.21.11
+# ============================================================
+name: SmorkiAutoPickup
+version: '1.0.0'
+main: com.smorki.smorkiautopickup.SmorkiAutoPickup
+api-version: '1.21'
+description: Auto-smelt ores and instantly pick up broken blocks with Fortune/Silk Touch support.
+authors: [ Smorki ]
+website: https://github.com/smorki/SmorkiAutoPickup
+
+# Folia regionized-threading declaration
+folia-supported: true
+
+commands:
+  smorkiautopickup:
+    description: Main SmorkiAutoPickup command.
+    usage: /smorkiautopickup <toggle|reload>
+    aliases: [ autopickup, sap ]
+    permission: smorkiautopickup.use
+
+permissions:
+  smorkiautopickup.use:
+    description: Allows the player to toggle auto-pickup for themselves.
+    default: true
+
+  smorkiautopickup.admin:
+    description: Allows access to admin commands such as /smorkiautopickup reload.
+    default: op
