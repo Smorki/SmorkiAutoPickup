@@ -1,0 +1,87 @@
+# ============================================================
+#  SmorkiAutoPickup — config.yml
+#  Theme: Matte Purple (#8E44AD) & Cyan (#00FFFF)
+#  MiniMessage syntax is used for ALL message strings.
+# ============================================================
+
+# ── General ─────────────────────────────────────────────────
+# Whether auto-pickup is enabled by default for new players
+# (players who have never run /autopickup toggle).
+default-enabled: true
+
+# ── Auto-Smelt ──────────────────────────────────────────────
+auto-smelt:
+  # Master switch — set to false to disable smelting entirely
+  # while keeping auto-pickup active.
+  enabled: true
+
+  # Map of raw ore → smelted result.
+  # You may add any material pair recognised by the Bukkit API.
+  recipes:
+    IRON_ORE: IRON_INGOT
+    DEEPSLATE_IRON_ORE: IRON_INGOT
+    GOLD_ORE: GOLD_INGOT
+    DEEPSLATE_GOLD_ORE: GOLD_INGOT
+    COPPER_ORE: COPPER_INGOT
+    DEEPSLATE_COPPER_ORE: COPPER_INGOT
+    NETHER_GOLD_ORE: GOLD_NUGGET
+    ANCIENT_DEBRIS: NETHERITE_SCRAP
+
+# ── Auto-Pickup (all blocks) ─────────────────────────────────
+auto-pickup:
+  # Master switch — set to false to disable pickup entirely.
+  enabled: true
+
+  # If true, items are also picked up when the player is in
+  # Creative mode (useful for creative-survival hybrid servers).
+  include-creative: false
+
+  # Blocks listed here are NEVER auto-picked up (exact Material names).
+  # Useful to exclude things like bedrock, barriers, etc.
+  blacklist:
+    - BEDROCK
+    - BARRIER
+    - COMMAND_BLOCK
+    - CHAIN_COMMAND_BLOCK
+    - REPEATING_COMMAND_BLOCK
+    - STRUCTURE_BLOCK
+    - STRUCTURE_VOID
+    - LIGHT
+
+# ── XP Awards ───────────────────────────────────────────────
+xp:
+  # Grant bonus XP when an ore is auto-smelted.
+  enabled: true
+  # XP points awarded per smelted ore.
+  amount-per-smelt: 1
+
+# ── Messages (MiniMessage format) ───────────────────────────
+# Colour palette reference:
+#   Matte Purple : <color:#8E44AD>
+#   Cyan         : <color:#00FFFF>
+#   Red warning  : <red>
+messages:
+  prefix: "<color:#8E44AD><bold>[SAP]</bold></color> "
+
+  toggle-enabled: >
+    <color:#8E44AD><bold>[SAP]</bold></color>
+    <color:#00FFFF>Auto-Pickup & Auto-Smelt <bold>ENABLED</bold>.</color>
+
+  toggle-disabled: >
+    <color:#8E44AD><bold>[SAP]</bold></color>
+    <color:#00FFFF>Auto-Pickup & Auto-Smelt <bold>DISABLED</bold>.</color>
+
+  inventory-full: >
+    <red><bold>⚠</bold> Your inventory is full! Items dropped on the ground.</red>
+
+  reload-success: >
+    <color:#8E44AD><bold>[SAP]</bold></color>
+    <color:#00FFFF>Configuration reloaded successfully.</color>
+
+  reload-no-permission: >
+    <color:#8E44AD><bold>[SAP]</bold></color>
+    <red>You do not have permission to run this command.</red>
+
+  unknown-command: >
+    <color:#8E44AD><bold>[SAP]</bold></color>
+    <color:#00FFFF>Usage: <white>/autopickup <toggle|reload></white></color>
