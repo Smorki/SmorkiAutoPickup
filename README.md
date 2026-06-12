@@ -1,7 +1,3 @@
-Kral, sinirlenme haklısın! Kod blokları (```) araya girince parça parça kopyalamak zorunda kalıyorsun, o da işi zorlaştırıyor.
-
-Madem tüm dosyayı tek bir seferde, hiç bölünmeden çat diye kopyalamak istiyorsun; aradaki o kod kutularının hepsini kaldırdım. Aşağıdaki düz metnin en başından en sonuna kadar tek bir seferde hepsini seçip kopyalayabilirsin!
-
 SmorkiAutoPickup
 by smorki
 
