@@ -1,29 +1,138 @@
-An enterprise-grade, ultra-performance economy and utility plugin engineered specifically for Folia and Paper multi-threaded server architectures running on Minecraft 1.21.11.✨ Features⚡ 100% Region-Safe & Asynchronous: Zero main-thread lag spikes. Fully integrated with Bukkit's Async Scheduler and Folia's regionized thread model.🔥 Auto-Smelt Mechanic: Automatically smelts raw mined ores (Iron, Gold, Copper) into pure ingots instantly.🎒 Integrated Auto-Pickup: Automatically puts mined drops directly into the player's inventory, completely preventing ground-entity item lag.💎 Enchantment Compatibility: Full native support for Fortune multiplier formulas and Silk Touch modifiers without checking loops on the main thread.🎨 Premium Aesthetic: Out of the box, all actionbars, chats, and console logs are themed with a gorgeous Matte Purple and Cyan palette using modern MiniMessage / Adventure API standards.🛠️ Performance Architecture (Why Folia Ready?)Traditional block-breaking listeners lock the main thread when manipulating inventories or computing drops during massive mining bursts (e.g., BoxPVP bombs or efficiency mining).SmorkiAutoPickup safely handles drop mathematics in independent async threads and offloads inventory insertions safely to the target entity's region scheduler:Java// Formulated for Folia's regionized architecture
-player.getScheduler().run(plugin, task -> {
-    player.getInventory().addItem(smeltedItem);
-}, null);
-💻 Commands & PermissionsCommandDescriptionPermission/autopickup toggleToggles the auto-smelt/pickup engine on or off.None (Default)/smorkiautopickup reloadAsynchronously reloads config.yml data.smorkiautopickup.admin⚙️ Configuration (config.yml)YAML#
-# Engineered by Smorki | Target Architecture: Folia 1.21.11
+Kral, sinirlenme haklısın! Kod blokları (```) araya girince parça parça kopyalamak zorunda kalıyorsun, o da işi zorlaştırıyor.
 
+Madem tüm dosyayı tek bir seferde, hiç bölünmeden çat diye kopyalamak istiyorsun; aradaki o kod kutularının hepsini kaldırdım. Aşağıdaki düz metnin en başından en sonuna kadar tek bir seferde hepsini seçip kopyalayabilirsin!
+
+SmorkiAutoPickup
+by smorki
+
+Enterprise-grade, ultra-performance economy and utility mechanics plugin engineered specifically for Folia's regionized multi-threaded architectures.
+
+Version: 1.0.0
+Platform: Folia | Paper 1.21.11
+Java: 21
+License: MIT
+
+/ |  /  |/ _ | _ | |/ / |  /\ | | |   / _ | _ _ / _| |/ / | | | _ \
+_ \ |/| | () |   /| ' < | |  / _ | |  | || () |  /| | (__| ' <| || |  /
+|/|  ||___/||||__|/_/   __|_/|| |_||_\__/||
+
+[SmorkiAutoPickup] v1.0.0 (Target: Folia 1.21.11)
+[SmorkiAutoPickup] Engineered by Smorki
+
+What it does
+Traditional block-breaking listeners lock the main tick loop when manipulating player inventories, validating drops, or computing massive drop mathematics during heavy mining bursts (e.g., BoxPVP custom bombs or high-efficiency haste mining). On high-player-count networks, this creates massive thread contention and instant TPS drops.
+
+SmorkiAutoPickup solves this efficiently by utilizing multi-threaded operations:
+
+Intercepts block breaks on Paper's BlockBreakEvent and cancels natural drops instantly to prevent ground-entity item lag.
+
+Processes heavy math configurations (Fortune multipliers and Silk Touch triggers) completely asynchronously.
+
+Offloads inventory insertions directly to the player's owning entity/region scheduler—completely eliminating region-wide lag spikes.
+
+Uses a thread-safe caching system to manage individual player preferences seamlessly.
+
+Performance architecture
+Why Folia's Threading Model Requires Asynchronous Execution
+Vanilla Paper runs game mechanics on a single primary tick loop. Folia replaces this with independent, regionized thread sheets. Offloading heavy task computations away from these hot region paths is mandatory for maintaining smooth performance.
+
+World
+├── Region A (Mining Zone)  → Thread A [SmorkiAutoPickup Processes Async Tasks Here]
+├── Region B (Spawn Area)   → Thread B [Completely Unaffected by Mining Drops]
+└── Region C (Factions/PvP) → Thread C [Zero Tick Interruption]
+
+SmorkiAutoPickup maps perfectly to this modern infrastructure:
+
+Drop Formula Interception: Region Thread (Event Pipeline) -> Captures block breakdowns directly on the ticking thread without stalling.
+
+Fortune & Smelt Processing: Asynchronous Multi-threading -> Mathematical drop matrix calculations happen outside the game loop.
+
+Inventory Ingestion: player.getScheduler().run(...) -> Safely modifies the player's personal inventory inside their respective region.
+
+Configuration Syncing: AsyncScheduler Execution -> Reading file IO parameters never blocks a running active game thread.
+
+Data Management Performance Matrix
+ConcurrentHashMap: Player preference cache (Toggles) -> Lock-striped architecture allows concurrent reads/writes with zero lock-ups.
+
+Folia Entity Scheduler: Secure inventory modification -> Dispatches inventory additions to the specific region thread owning the player.
+
+Adventure API (MiniMessage): Advanced Text Component parsing -> Immutable component tree processing prevents legacy string compilation delays.
+
+Installation
+Verify that your server software is running Folia or Paper (Minecraft 1.21.11).
+
+Download SmorkiAutoPickup-1.0.0.jar from the Releases portal.
+
+Drop the compiled artifact file into your server's local plugins/ directory.
+
+Restart your target instance securely to enable correct architecture hook-ups.
+
+Configuration (config.yml)
 settings:
-  # Interval configuration adjustments if needed
-  async-processing: true
-  give-xp: true
-  filter-offline-cache: true
+async-processing: true
+give-xp: true
+filter-offline-cache: true
 
-# Modern Matte Purple (#8E44AD) and Cyan (#00FFFF) Theme Configurations
 messages:
-  prefix: "<gradient:#8E44AD:#00FFFF><bold>℠ SMORKIAUTOPICKUP</bold></gradient> <dark_gray>»</dark_gray> "
-  no-permission: "<red>⚠️ YETKİNİZ BULUNMAMAKTADIR.</red>"
-  toggle-on: "<gray>Auto-Pickup özelliği <gradient:#8E44AD:#00FFFF><bold>AKTİF</bold></gradient> hâle getirildi.</gray>"
-  toggle-off: "<gray>Auto-Pickup özelliği <red><bold>DEAKTİF</bold></red> hâle getirildi.</gray>"
-  inventory-full: "<red>⚠️ ENVANTERİNİZ DOLU! Maddeler yere düşürüldü.</red>"
+prefix: "gradient:#8E44AD:#00FFFF℠ SMORKIAUTOPICKUP <dark_gray>»</dark_gray> "
+no-permission: "⚠️ YETKİNİZ BULUNMAMAKTADIR."
+toggle-on: "Auto-Pickup özelliği gradient:#8E44AD:#00FFFFAKTİF hâle getirildi."
+toggle-off: "Auto-Pickup özelliği DEAKTİF hâle getirildi."
+inventory-full: "⚠️ ENVANTERİNİZ DOLU! Maddeler yere düşürüldü."
 
 smelt-targets:
-  IRON_ORE: "IRON_INGOT"
-  DEEPSLATE_IRON_ORE: "IRON_INGOT"
-  GOLD_ORE: "GOLD_INGOT"
-  DEEPSLATE_GOLD_ORE: "GOLD_INGOT"
-  COPPER_ORE: "COPPER_INGOT"
-  DEEPSLATE_COPPER_ORE: "COPPER_INGOT"
-🚀 Build SpecificationsLanguage: Java 21Platform APIs: Folia API, Paper API (1.21.11-R0.1-SNAPSHOT)Design Core: Adventure API / MiniMessage (Legacy ampersand formatting free)
+IRON_ORE: "IRON_INGOT"
+DEEPSLATE_IRON_ORE: "IRON_INGOT"
+GOLD_ORE: "GOLD_INGOT"
+DEEPSLATE_GOLD_ORE: "GOLD_INGOT"
+COPPER_ORE: "COPPER_INGOT"
+DEEPSLATE_COPPER_ORE: "COPPER_INGOT"
+
+Commands & Permissions
+/autopickup toggle -> Toggles the auto-smelt/pickup engine on or off. (Permission: None)
+
+/smorkiautopickup reload -> Asynchronously reloads all configuration details. (Permission: smorkiautopickup.admin)
+
+Project Structure
+src/main/java/com/smorki/smorkiautopickup/
+├── SmorkiAutoPickup.java         Main plugin bootstrap, lifecycles, and console logs
+├── config/
+│   └── ConfigManager.java        Thread-safe configurations loader and async handler
+├── listener/
+│   └── AsyncBlockListener.java   Intercepts block drops, fortune handling, auto-smelt
+├── command/
+│   └── PickupCommand.java        Executes toggle controls & administrative reloads
+└── util/
+└── MessageUtil.java          Adventure MiniMessage parsing engine for gradients
+
+Building from source
+Requirements: Java 21+, Maven 3.9+
+
+git clone https://github.com/smorki/SmorkiAutoPickup.git
+cd SmorkiAutoPickup
+mvn clean package
+
+Output Artifact Location: target/SmorkiAutoPickup-1.0.0.jar
+Why this matters for high-tier networks
+Scenario: 50 players mining with Haste III / Bombs
+
+Without SmorkiAutoPickup: Global thread stalls, item drops trigger massive ground-entity lag spikes.
+
+With SmorkiAutoPickup: Ground drops are bypassed. Mechanics calculation drops off to async processing.
+
+Scenario: Player inventory fills completely
+
+Without SmorkiAutoPickup: Server loops continuously checking drop positions, creating spikes.
+
+With SmorkiAutoPickup: Instant actionbar alerts appear using MiniMessage. Drops dump safely without thread hitching.
+
+Scenario: Administrative configuration hot-reloads
+
+Without SmorkiAutoPickup: Server thread blocks IO channels, risking chunk tick synchronization.
+
+With SmorkiAutoPickup: Async parsing reads configuration details safely in separate context threads.
+
+License
+MIT — feel free to use, tweak, or redistribute with proper attribution.
+
+Made with care by Smorki
