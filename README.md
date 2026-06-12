@@ -12,9 +12,7 @@ Platform: Folia | Paper 1.21.11
 Java: 21
 License: MIT
 
-/ |  /  |/ _ | _ | |/ / |  /\ | | |   / _ | _ _ / _| |/ / | | | _ \
-_ \ |/| | () |   /| ' < | |  / _ | |  | || () |  /| | (__| ' <| || |  /
-|/|  ||___/||||__|/_/   __|_/|| |_||_\__/||
+
 
 [SmorkiAutoPickup] v1.0.0 (Target: Folia 1.21.11)
 [SmorkiAutoPickup] Engineered by Smorki
